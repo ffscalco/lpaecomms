@@ -60,7 +60,7 @@ a:hover {
     border-top-right-radius: 10px;
     background-color: #FFFFFF;
 }
-#navHeader{
+.navHeader{
     position: relative;
     height: 30px;
     text-align: center;

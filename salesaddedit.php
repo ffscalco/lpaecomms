@@ -13,12 +13,13 @@
   if(!$txtSearch) {
     isset($_REQUEST['txtSearch'])? $txtSearch = $_REQUEST['txtSearch'] : $txtSearch = "";
   }
+
   if($action == "delRec") {
     $query =
-      "UPDATE lpa_stock SET
-         lpa_stock_status = 'D'
+      "UPDATE lpa_invoices SET
+         lpa_inv_status = 'D'
        WHERE
-         lpa_stock_ID = '$sid' LIMIT 1
+         lpa_inv_no = '$sid' LIMIT 1
       ";
     openDB();
     $result = $db->query($query);
@@ -26,12 +27,12 @@
       printf("Errormessage: %s\n", $db->error);
       exit;
     } else {
-      header("Location: stock.php?a=recDel&txtSearch=$txtSearch");
+      header("Location: sales.php?a=recDel&txtSearch=$txtSearch");
       exit;
     }
   }
 
-  isset($_POST['txtStockID'])? $stockID = $_POST['txtStockID'] : $stockID = gen_ID();
+  isset($_POST['txtInvNo'])? $invoiceID = $_POST['txtInvNo'] : $invoiceID = gen_ID();
   isset($_POST['txtStockName'])? $stockName = $_POST['txtStockName'] : $stockName = "";
   isset($_POST['txtStockDesc'])? $stockDesc = $_POST['txtStockDesc'] : $stockDesc = "";
   isset($_POST['txtStockOnHand'])? $stockOnHand = $_POST['txtStockOnHand'] : $stockOnHand = "0";
@@ -41,15 +42,15 @@
   $mode = "insertRec";
   if($action == "updateRec") {
     $query =
-      "UPDATE lpa_stock SET
-         lpa_stock_ID = '$stockID',
+      "UPDATE lpa_invoices SET
+         lpa_inv_no = '$invoiceID',
          lpa_stock_name = '$stockName',
          lpa_stock_desc = '$stockDesc',
          lpa_stock_onhand = '$stockOnHand',
          lpa_stock_price = '$stockPrice',
          lpa_stock_status = '$stockStatus'
        WHERE
-         lpa_stock_ID = '$sid' LIMIT 1
+         lpa_inv_no = '$sid' LIMIT 1
       ";
      openDB();
      $result = $db->query($query);
@@ -57,21 +58,21 @@
        printf("Errormessage: %s\n", $db->error);
        exit;
      } else {
-         header("Location: stock.php?a=recUpdate&txtSearch=$txtSearch");
+         header("Location: sales.php?a=recUpdate&txtSearch=$txtSearch");
        exit;
      }
   }
   if($action == "insertRec") {
     $query =
-      "INSERT INTO lpa_stock (
-         lpa_stock_ID,
+      "INSERT INTO lpa_invoices (
+         lpa_inv_no,
          lpa_stock_name,
          lpa_stock_desc,
          lpa_stock_onhand,
          lpa_stock_price,
          lpa_stock_status
        ) VALUES (
-         '$stockID',
+         '$invoiceID',
          '$stockName',
          '$stockDesc',
          '$stockOnHand',
@@ -85,17 +86,17 @@
       printf("Errormessage: %s\n", $db->error);
       exit;
     } else {
-      header("Location: stock.php?a=recInsert&txtSearch=".$stockID);
+      header("Location: sales.php?a=recInsert&txtSearch=".$invoiceID);
       exit;
     }
   }
 
   if($action == "Edit") {
-    $query = "SELECT * FROM lpa_stock WHERE lpa_stock_ID = '$sid' LIMIT 1";
+    $query = "SELECT * FROM lpa_invoices WHERE lpa_inv_no = '$sid' LIMIT 1";
     $result = $db->query($query);
     $row_cnt = $result->num_rows;
     $row = $result->fetch_assoc();
-    $stockID     = $row['lpa_stock_ID'];
+    $invoiceID     = $row['lpa_inv_no'];
     $stockName   = $row['lpa_stock_name'];
     $stockDesc   = $row['lpa_stock_desc'];
     $stockOnHand = $row['lpa_stock_onhand'];
@@ -107,12 +108,46 @@
   build_navBlock();
   $fieldSpacer = "5px";
 ?>
+  <script src="js/searchClient.js" type="text/javascript"></script>
 
   <div id="content">
-    <div class="PageTitle">Stock Record Management (<?PHP echo $action; ?>)</div>
-    <form name="frmStockRec" id="frmStockRec" method="post" action="<?PHP echo $_SERVER['PHP_SELF']; ?>">
-      <div>
-        <input name="txtStockID" id="txtStockID" placeholder="Stock ID" value="<?PHP echo $stockID; ?>" style="width: 100px;" title="Stock ID">
+    <div class="PageTitle">Invoice Record Management (<?PHP echo $action; ?>)</div>
+
+    <form name="frmInvoiceRec" id="frmInvoiceRec" method="post" action="<?PHP echo $_SERVER['PHP_SELF']; ?>">
+      <div class="displayPane">
+        <label><strong>Invoice Number:</strong> <?PHP echo $invoiceID; ?></label>
+        <input name="txtInvNo" id="txtInvNo" value="<?PHP echo $invoiceID; ?>" type="hidden">
+      </div>
+      <br />
+      <div class="displayPane">
+        <div class="displayPaneCaption">Search Client:</div>
+        <div>
+          <input name="txtSearchClient" id="txtSearchClient" placeholder="Search Client"
+          style="width: 115px">
+          <button type="button" id="btnSearchClient">Search</button>
+        </div>
+        <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Client ID</strong></label>
+            <br />
+            <input name="txtClientId" id="txtClientId" value="" title="Client ID" disabled="disabled" style="width: 95%;">
+          </div>
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Name</strong></label>
+            <br />
+            <input name="txtClientName" id="txtClientName" value="" title="Name" disabled="disabled" style="width: 95%;">
+          </div>
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Address</strong></label>
+            <br />
+            <input name="txtClientAddress" id="txtClientAddress" value="" title="Address" disabled="disabled" style="width: 95%;">
+          </div>
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Phone</strong></label>
+            <br />
+            <input name="txtClientPhone" id="txtClientPhone" value="" title="Phone" disabled="disabled" style="width: 95%;">
+          </div>
+        </div>
       </div>
       <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
         <input name="txtStockName" id="txtStockName" placeholder="Stock Name" value="<?PHP echo $stockName; ?>" style="width: 400px;"  title="Stock Name">
@@ -138,25 +173,19 @@
       <input name="txtSearch" id="txtSearch" value="<?PHP echo $txtSearch; ?>" type="hidden">
     </form>
     <div class="optBar">
-      <button type="button" id="btnStockSave">Save</button>
-      <button type="button" onclick="navMan('stock.php')">Close</button>
+      <button type="button" id="btnInvoiceSave">Save</button>
+      <button type="button" onclick="navMan('sales.php')">Close</button>
       <?PHP if($action == "Edit") { ?>
       <button type="button" onclick="delRec('<?PHP echo $sid; ?>')" style="color: darkred; margin-left: 20px">DELETE</button>
       <?PHP } ?>
     </div>
   </div>
   <script>
-    var stockRecStatus = "<?PHP echo $stockStatus; ?>";
-    if(stockRecStatus == "a") {
-      $('#txtStockStatusActive').prop('checked', true);
-    } else {
-      $('#txtStockStatusInactive').prop('checked', true);
-    }
-    $("#btnStockSave").click(function(){
-        $("#frmStockRec").submit();
+    $("#btnInvoiceSave").click(function(){
+        $("#frmInvoiceRec").submit();
     });
     function delRec(ID) {
-      navMan("stockaddedit.php?sid=" + ID + "&a=delRec");
+      navMan("salesaddedit.php?sid=" + ID + "&a=delRec");
     }
     setTimeout(function(){
       $("#txtStockName").focus();

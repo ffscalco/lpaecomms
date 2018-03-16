@@ -120,24 +120,23 @@ function build_header() {
 /**
  * Build the Navigation block
  */
-function build_navBlock() { 
+function build_navBlock() {
 	isset($_SESSION["isAdmin"])?
 		$isAdmin = $_SESSION["isAdmin"] :
 		$isAdmin = "";
 	?>
     <div id="navBlock">
-      <div id="navHeader">MAIN MENU</div>
+      <div class="navHeader">MAIN MENU</div>
       <div class="navItem" onclick="navMan('index.php')">HOME</div>
       <div class="navItem" onclick="navMan('stock.php')">STOCK</div>
       <div class="navItem" onclick="navMan('sales.php')">SALES</div>
+      <div class="navItem" onclick="navMan('help.php')">HELP</div>
 	  <?PHP
       if($isAdmin) {
 		?>
-		  <div class="menuSep"></div>
-		  <div class="navTitle">Administration</div>
+		  <div class="navHeader">Administration</div>
 		  <div class="navItem" onclick="navMan('users.php')">USERS</div>
 		<?PHP } ?>
-      <div class="menuSep"></div>
       <div class="navItem" onclick="navMan('login.php?killses=true')">Logout</div>
     </div>
 <?PHP
@@ -176,6 +175,5 @@ function gen_ID($prefix='',$length=3, $strength=0) {
 function build_footer() {
   include 'footer.php';
 }
-
 
 ?>

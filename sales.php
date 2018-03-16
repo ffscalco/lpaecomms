@@ -53,9 +53,9 @@
          FROM
             lpa_invoices
          WHERE
-            lpa_inv_no LIKE '%$txtSearch%'
+            lpa_inv_no LIKE '%$txtSearch%' AND lpa_inv_status <> 'D'
          OR
-            lpa_inv_client_name LIKE '%$txtSearch%'
+            lpa_inv_client_name LIKE '%$txtSearch%' AND lpa_inv_status <> 'D'
 
          ";
       $result = $db->query($query);
