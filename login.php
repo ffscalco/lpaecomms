@@ -1,4 +1,4 @@
-<?PHP 
+<?PHP
   require('app-lib.php');
   isset($_POST['a'])? $action = $_POST['a'] : $action = "";
   $msg = null;
@@ -10,6 +10,8 @@
       $uPassword = $_POST['fldPassword'] : $uPassword = "";
 
     openDB();
+    $uPassword = base64_encode($uPassword);
+
     $query =
       "
       SELECT
