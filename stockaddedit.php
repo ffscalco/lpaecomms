@@ -24,8 +24,10 @@
     $result = $db->query($query);
     if($db->error) {
       printf("Errormessage: %s\n", $db->error);
+      lpa_log($db->error);
       exit;
     } else {
+      lpa_log("User {$uName} deleted sotck id: {$sid}.");
       header("Location: stock.php?a=recDel&txtSearch=$txtSearch");
       exit;
     }
@@ -54,9 +56,11 @@
      openDB();
      $result = $db->query($query);
      if($db->error) {
+        lpa_log($db->error);
        printf("Errormessage: %s\n", $db->error);
        exit;
      } else {
+        lpa_log("User {$uName} updated sotck id: {$sid}.");
          header("Location: stock.php?a=recUpdate&txtSearch=$txtSearch");
        exit;
      }
@@ -82,9 +86,11 @@
     openDB();
     $result = $db->query($query);
     if($db->error) {
+      lpa_log($db->error);
       printf("Errormessage: %s\n", $db->error);
       exit;
     } else {
+      lpa_log("User {$uName} created sotck id: {$stockID}.");
       header("Location: stock.php?a=recInsert&txtSearch=".$stockID);
       exit;
     }

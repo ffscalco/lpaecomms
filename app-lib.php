@@ -176,4 +176,18 @@ function build_footer() {
   include 'footer.php';
 }
 
+/**
+ *  Log system
+ */
+function lpa_log($log_msg)
+{
+    $log_filename = "log";
+    if (!file_exists($log_filename)) {
+      mkdir($log_filename, 0777, true);
+    }
+    $log_file_data = $log_filename.'/lpalog.log';
+    $log_msg = date('d/m/Y H:i:s') . ": {$log_msg}";
+    file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
+}
+
 ?>

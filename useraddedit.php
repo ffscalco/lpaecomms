@@ -23,9 +23,11 @@
     openDB();
     $result = $db->query($query);
     if($db->error) {
+      lpa_log($db->error);
       printf("Errormessage: %s\n", $db->error);
       exit;
     } else {
+      lpa_log("User {$uName} deleted user id: {$sid}.");
       header("Location: users.php?a=recDel&txtSearch=$txtSearch");
       exit;
     }
@@ -57,9 +59,11 @@
      openDB();
      $result = $db->query($query);
      if($db->error) {
+      lpa_log($db->error);
        printf("Errormessage: %s\n", $db->error);
        exit;
      } else {
+        lpa_log("User {$uName} updated user id: {$sid}.");
          header("Location: users.php?a=recUpdate&txtSearch=$txtSearch");
        exit;
      }
@@ -68,12 +72,12 @@
     $userPassword = base64_encode($userPassword);
     $query =
       "INSERT INTO lpa_users (
-          lpa_user_ID
-          lpa_user_username
-          lpa_user_password
-          lpa_user_firstname
-          lpa_user_lastname
-          lpa_user_group
+          lpa_user_ID,
+          lpa_user_username,
+          lpa_user_password,
+          lpa_user_firstname,
+          lpa_user_lastname,
+          lpa_user_group,
           lpa_user_status
        ) VALUES (
          '$userID',
@@ -82,15 +86,17 @@
          '$userFirstName',
          '$userLastName',
          '$userGroup',
-         '$userStatus',
+         '$userStatus'
        )
       ";
     openDB();
     $result = $db->query($query);
     if($db->error) {
+      lpa_log($db->error);
       printf("Errormessage: %s\n", $db->error);
       exit;
     } else {
+      lpa_log("User {$uName} created user id: {$userID}.");
       header("Location: users.php?a=recInsert&txtSearch=".$userID);
       exit;
     }

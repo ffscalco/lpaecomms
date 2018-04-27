@@ -33,6 +33,7 @@
       if($row['lpa_user_password'] == $uPassword) {
         $_SESSION['authUser'] = $row['lpa_user_ID'];
 		$_SESSION['isAdmin'] = (($row['lpa_user_group']=="administrator")?true:false);
+        lpa_log("User {$uName} successfully logged in.");
         header("Location: index.php");
         exit;
       }
@@ -40,6 +41,7 @@
 
     if($chkLogin == false) {
       $msg = "Login failed! Please try again.";
+      lpa_log("User {$uName} failed to log in.");
     }
 
   }
