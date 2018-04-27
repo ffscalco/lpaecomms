@@ -9,9 +9,14 @@
   if(!$action) {
     isset($_POST['a'])? $action = $_POST['a'] : $action = "";
   }
-  isset($_POST['txtSearch'])? $txtSearch = $_POST['txtSearch'] : $txtSearch = "";
-  if(!$txtSearch) {
-    isset($_REQUEST['txtSearch'])? $txtSearch = $_REQUEST['txtSearch'] : $txtSearch = "";
+  isset($_POST['txtSearchClient'])? $txtSearchClient = $_POST['txtSearchClient'] : $txtSearchClient = "";
+  if(!$txtSearchClient) {
+    isset($_REQUEST['txtSearchClient'])? $txtSearchClient = $_REQUEST['txtSearchClient'] : $txtSearchClient = "";
+  }
+
+  isset($_POST['txtSearchStock'])? $txtSearchStock = $_POST['txtSearchStock'] : $txtSearchStock = "";
+  if(!$txtSearchStock) {
+    isset($_REQUEST['txtSearchStock'])? $txtSearchStock = $_REQUEST['txtSearchStock'] : $txtSearchStock = "";
   }
 
   if($action == "delRec") {
@@ -108,7 +113,9 @@
   build_navBlock();
   $fieldSpacer = "5px";
 ?>
+  <script src="js/utils.js" type="text/javascript"></script>
   <script src="js/searchClient.js" type="text/javascript"></script>
+  <script src="js/searchStock.js" type="text/javascript"></script>
 
   <div id="content">
     <div class="PageTitle">Invoice Record Management (<?PHP echo $action; ?>)</div>
@@ -149,25 +156,63 @@
           </div>
         </div>
       </div>
-      <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
-        <input name="txtStockName" id="txtStockName" placeholder="Stock Name" value="<?PHP echo $stockName; ?>" style="width: 400px;"  title="Stock Name">
+      <br />
+      <div class="displayPane">
+        <div class="displayPaneCaption">Search Stock:</div>
+        <div>
+          <input name="txtSearchStock" id="txtSearchStock" placeholder="Search Client"
+          style="width: 115px">
+          <button type="button" id="btnSearchStock">Search</button>
+        </div>
+        <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Stock ID</strong></label>
+            <br />
+            <input name="txtStockId" id="txtStockId" value="" title="Stock ID" disabled="disabled" style="width: 95%;">
+          </div>
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Name</strong></label>
+            <br />
+            <input name="txtStockName" id="txtStockName" value="" title="Name" disabled="disabled" style="width: 95%;">
+          </div>
+          <div style="display: inline-block; width: 24%">
+            <label for=""><strong>Price</strong></label>
+            <br />
+            <input name="txtStockPrice" id="txtStockPrice" value="" title="Price" disabled="disabled" style="width: 95%;">
+          </div>
+          <div style="display: inline-block; width: 15%">
+            <label for=""><strong>Quantity</strong></label>
+            <br />
+            <input name="txtStockQty" id="txtStockQty" value="" title="Quantity" type="number" max="0" min="0" style="width: 50%;">
+          </div>
+          <div style="display: inline-block; width: 10%">
+            <input type="button" class="addItem" value="Add Item"></input>
+          </div>
+        </div>
       </div>
-      <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
-        <textarea name="txtStockDesc" id="txtStockDesc" placeholder="Stock Description" style="width: 400px;height: 80px"  title="Stock Description"><?PHP echo $stockDesc; ?></textarea>
-      </div>
-      <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
-        <input name="txtStockOnHand" id="txtStockOnHand" placeholder="Stock On-Hand" value="<?PHP echo $stockOnHand; ?>" style="width: 90px;text-align: right"  title="Stock On-Hand">
-      </div>
-      <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
-        <input name="txtStockPrice" id="txtStockPrice" placeholder="Stock Price" value="<?PHP echo $stockPrice; ?>" style="width: 90px;text-align: right"  title="Stock Price">
-      </div>
-      <div style="margin-top: <?PHP echo $fieldSpacer; ?>">
-        <div>Stock Status:</div>
-        <input name="txtStatus" id="txtStockStatusActive" type="radio" value="a">
-          <label for="txtStockStatusActive">Active</label>
-        <input name="txtStatus" id="txtStockStatusInactive" type="radio" value="i">
-          <label for="txtStockStatusInactive">Inactive</label>
-      </div>
+      <br />
+      <table style="width: calc(100% - 15px);border: #cccccc solid 1px" id="itemsList">
+        <thead>
+          <tr style="background: #eeeeee">
+            <td style="width: 105px;border-left: #cccccc solid 1px"><b>Stock ID</b></td>
+            <td style="border-left: #cccccc solid 1px"><b>Name</b></td>
+            <td style="width: 130px;text-align: right;border-left: #cccccc solid 1px"><b>Price</b></td>
+            <td style="width: 80px;text-align: right;border-left: #cccccc solid 1px"><b>Quantity</b></td>
+            <td style="width: 80px;text-align: right;border-left: #cccccc solid 1px"><b>Amout</b></td>
+            <td style="width: 80px;text-align: right;border-left: #cccccc solid 1px"><b>#</b></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hl">
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr style="border-top: #ccc 1px solid;">
+            <td colspan="4" style="text-align: right;">Total Amount:</td>
+            <td colspan="2" class="totalAmount"  style="text-align: left; font-weight: bold;"></td>
+          </tr>
+        </tfoot>
+      </table>
       <input name="a" id="a" value="<?PHP echo $mode; ?>" type="hidden">
       <input name="sid" id="sid" value="<?PHP echo $sid; ?>" type="hidden">
       <input name="txtSearch" id="txtSearch" value="<?PHP echo $txtSearch; ?>" type="hidden">

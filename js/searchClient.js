@@ -14,7 +14,7 @@ $(function() {
             $("input#txtClientAddress").val("");
             $("input#txtClientPhone").val("");
 
-            alert("There is no Clint with ID: " + searchTxt)
+            alert("There is no Client with ID: " + searchTxt)
           } else {
             $("input#txtClientId").val(result.id);
             $("input#txtClientName").val(result.name);
