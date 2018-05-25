@@ -55,9 +55,9 @@ function openDB() {
      *   - Replace the connection string tags below with your MySQL parameters
      */
     $db = new mysqli(
-      "localhost",
-      "lpa_ecomms",
-      "5XmvHX4djjzQRMRS",
+      "127.0.0.1",
+      "root",
+      "",
       "lpa_ecomms"
     );
     if ($db->connect_errno) {
