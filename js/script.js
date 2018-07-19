@@ -5,8 +5,9 @@ function navMan(URL) {
     window.location = URL;
 }
 function addToCart(ID) {
-    var qty = document.getElementById("fldQTY-"+ID).value;
-    alert(qty + " x Item: " + ID + " has been added to your cart");
+    var element = $("#fldQTY-"+ID);
+    var name = element.parents("div.productListItem").find("div.prodTitle").text();
+    alert(element.val() + " x Item: " + name + " has been added to your cart");
 }
 function do_login() {
     document.getElementById("frmLogin").submit();

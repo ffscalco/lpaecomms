@@ -1,5 +1,5 @@
-<?PHP 
-  require('app-lib.php'); 
+<?PHP
+  require('app-lib.php');
   build_header();
   isset($_POST['a'])? $action = $_POST['a'] : $action = "";
 ?>
@@ -12,7 +12,6 @@
       <div>
         <input id="txtSearch" name="txtSearch" value="" placeholder="Search....">
         <button type="submit">Search</button>
-        <button type="button" onclick="loadURL('reg.php')">Add Stock</button>
       </div>
     </div>
     <input type="hidden" name="a" value="search">
@@ -58,18 +57,16 @@
               </div>
             </div>
             <div class="prodAddToCart">
-              <button
-                type="button"
-                onclick="addToCart('<?PHP echo $prodID; ?>')">
+              <a href="cart.php?action=add&id=<?PHP echo $prodID; ?>">
                 Add To Cart
-              </button>
+              </a>
             </div>
           </div>
           <div style="clear: left"></div>
         </div>
       <?PHP } ?>
       </div>
-    <?PHP;
+    <?PHP
     } ?>
   <script>
     function loadURL(URL) {

@@ -130,6 +130,8 @@ function build_navBlock() {
       <div class="navItem" onclick="navMan('index.php')">HOME</div>
       <div class="navItem" onclick="navMan('stock.php')">STOCK</div>
       <div class="navItem" onclick="navMan('sales.php')">SALES</div>
+      <div class="navItem" onclick="navMan('products.php')">PRODUCTS</div>
+      <div class="navItem" onclick="navMan('cart.php')">CART</div>
       <div class="navItem" onclick="navMan('help.php')">HELP</div>
 	  <?PHP
       if($isAdmin) {
