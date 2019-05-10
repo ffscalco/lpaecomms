@@ -55,10 +55,10 @@ function openDB() {
      *   - Replace the connection string tags below with your MySQL parameters
      */
     $db = new mysqli(
-      "127.0.0.1",
-      "root",
-      "",
-      "lpa_ecomms"
+      "localhost",
+      "id7045576_lpa_ecomms",
+      "testtest",
+      "id7045576_lpa_ecomms"
     );
     if ($db->connect_errno) {
       echo "Failed to connect to MySQL: (" .

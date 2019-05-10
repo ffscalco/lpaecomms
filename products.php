@@ -45,7 +45,7 @@
           <div class="prodTitle"><?PHP echo $row['lpa_stock_name']; ?></div>
           <div class="prodDesc"><?PHP echo $row['lpa_stock_desc']; ?></div>
           <div class="prodOptionsFrame">
-            <div class="prodPriceQty">
+            <!-- <div class="prodPriceQty">
               <div class="prodPrice">$<?PHP echo $row['lpa_stock_price']; ?></div>
               <div class="prodQty">QTY:</div>
               <div class="prodQtyFld">
@@ -55,7 +55,7 @@
                   type="number"
                   value="1">
               </div>
-            </div>
+            </div> -->
             <div class="prodAddToCart">
               <a href="cart.php?action=add&id=<?PHP echo $prodID; ?>">
                 Add To Cart

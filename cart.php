@@ -54,8 +54,13 @@
         }
     ?>
         <hr />
-        <a href="products.php">Go to Products</a>
-        <a href="cart.php?action=clean">Clean Cart</a>
+        <ul>
+            <li><a href="products.php">Go to Products</a></li>
+            <li><a href="cart.php?action=clean">Clean Cart</a></li>
+            <li><a href="checkout.php">Checkout</a></li>
+        </ul>
+
+
     <?php
 
     }else{
